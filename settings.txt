@@ -1,0 +1,10 @@
+#Sat Apr 25 16:31:40 CEST 2020
+heiht=940
+top=24
+left=150
+maximized=0
+width=1200
+map=Default.txt
+speed=100
+agent_count=14
+height=806
