@@ -197,7 +197,7 @@ public class MainFrame extends javax.swing.JFrame{
         Settings.setInt("agent_count", agentCount);
         
         // Load the map from file
-        App.map.Set(37, 37, 2, 5, agentCount);
+        App.map.Set(18, 18, 2, 4, agentCount);
         App.finished = false;
         
         // Update the GUI and disable autostep

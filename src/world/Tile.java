@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Map;
 import AStar.Searchable;
+import app.App;
 import app.Drawable;
 
 public class Tile implements Drawable, Searchable {
@@ -69,17 +70,23 @@ public class Tile implements Drawable, Searchable {
     public void Draw(@SuppressWarnings("exports") Graphics2D g, int size){   	
     	if (count == 0) { g.setColor(Color.white); }
     	else{
-            int red = 8 * count;
+            int red = 16 * count;
             if (red > 255) red = 255;
             g.setColor(new Color(255, 255-red, 255-red));
         }
     	g.setStroke(new BasicStroke(0));
     	g.fillRect(GetX()*size+1, GetY()*size+1, size-1, size-1);
     	
+    	String cellImage = "tile";
+    	
+    	if (!cellImage.isEmpty()) {
+            g.drawImage(App.getCachedImage(cellImage), GetX()*size, GetY()*size, size, size, null);
+        }
+    	
         if (myThing != null)
         {
             myThing.Draw(g, size);
-        }
+        } 
 
     }
 

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Stack;
 
 import AStar.Node;
+import app.App;
 
 public class Robot extends Thing{
 	//célok koordinátái
@@ -37,11 +38,19 @@ public class Robot extends Thing{
     }
 
     public void Draw(@SuppressWarnings("exports") Graphics2D g, int size){ 
-        g.setColor(Color.blue);
+        /*g.setColor(Color.blue);
         if (myPackage != null)
         	g.setColor(Color.cyan);
     	g.setStroke(new BasicStroke(0));
     	g.fillRect(GetX()*size+1, GetY()*size+1, size-1, size-1);
+    	*/
+    	
+    	String cellImage = "robot";
+    	
+    	if (!cellImage.isEmpty()) {
+            g.drawImage(App.getCachedImage(cellImage), GetX()*size, GetY()*size, size, size, null);
+        }
+    	
     	if (myPackage != null) {
     		myPackage.Draw(g, size);
     	}

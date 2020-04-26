@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-import world.Warehouse;
 
 public class PaintPanel extends JPanel{  
 	private static final long serialVersionUID = 1L;
@@ -40,5 +39,6 @@ public class PaintPanel extends JPanel{
         
         paintingInProgress = false;
     }
+    
 
 }
