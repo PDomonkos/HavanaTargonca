@@ -11,7 +11,7 @@ import app.App;
 
 public class Package extends Thing {
 	
-	Position dest;
+	Position dest = null;
 	Color myColor = Color.gray;
 	
 	
@@ -21,14 +21,16 @@ public class Package extends Thing {
 	
     public void Draw(@SuppressWarnings("exports") Graphics2D g,int size)
     {
-    	//g.setColor(myColor);
-    	//g.setStroke(new BasicStroke(0));
-    	//g.fillRect(GetX()*size+1, GetY()*size+1, size-1, size-1);
+    	if (dest != null) {
+    		g.setColor(myColor);
+    		g.setStroke(new BasicStroke(0));
+    		g.fillRect(GetX()*size, GetY()*size, size, size);
+    	}
     	
     	String cellImage = "package";
     	
     	if (!cellImage.isEmpty()) {
-            g.drawImage(App.getCachedImage(cellImage), GetX()*size+5, GetY()*size+5, size-7, size-7, null);
+            g.drawImage(App.getCachedImage(cellImage), GetX()*size+4, GetY()*size+4, size-8, size-8, null);
         }
     }
 
@@ -37,8 +39,8 @@ public class Package extends Thing {
     }
     
     // ha van célja
-    public void setDest(Position d) {
+    public void setDest(Position d, @SuppressWarnings("exports") Color c) {
     	dest = d;
-    	myColor = Color.red;
+    	myColor = c;
     }
 }

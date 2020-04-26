@@ -102,12 +102,9 @@ public class Warehouse implements Drawable {
 
         //n db targonca létrehozása
         for (int i = 0; i < n; i++)
-            robots.add(new Robot(tiles[i + 1][h]));
+            robots.add(new Robot(tiles[i + 1][h], (float)(i+1)/n));
     }
     
-    //targoncák céljainak beállítása
-    //paraméter: .csv fájl minden sor egy honnan hova pár (x-y koordináták)
-
     //targoncák céljainak beállítása
     //paraméter: .csv fájl minden sor egy honnan hova pár (x-y koordináták)
     private void SetGoals(String goals){
@@ -134,13 +131,14 @@ public class Warehouse implements Drawable {
 	            {
 	                //elhelyezzük a mapen a célcsomagokat
 	            	Package p =new Package(tiles[fromX][fromY]);
-	            	p.setDest(new Position(toX,toY));
+	            	p.setDest(new Position(toX,toY), robots.get(count % robots.size()).getColor());
 	                tiles[fromX][fromY].Add(p);
 	
 	                //sorba a targoncáknak beállítjuk a célokat, verembe elõszõr a cél, utána a kiindulás, mert fordítva szedi ki
 	                //itt is lehetne optimalizálni
 	                robots.get(count % robots.size()).addDestination(new Position(toX, toY));
 	                robots.get(count % robots.size()).addDestination(new Position(fromX, fromY));
+	                
 	                count++;
 	            }
 	                        

@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 
+import AStar.AStar;
 import world.Warehouse;
 
 public class App {
@@ -15,6 +16,8 @@ public class App {
     static MainFrame mainFrame = null;
     // The map the simulator uses
     static Warehouse map = null;
+    public static AStar aStar = null;
+    
     // Image cache for loading every image only once
     private static HashMap<String,BufferedImage> imageCache = new HashMap<>();
     static boolean finished = false;
@@ -26,6 +29,7 @@ public class App {
     public static void main(String[] args) {
         Settings.load();
         map = new Warehouse();
+        aStar = new AStar();
         mainFrame = new MainFrame();
         mainFrame.setVisible(true);
         
