@@ -84,12 +84,16 @@ public class MainFrame extends javax.swing.JFrame{
         jButton4 = new javax.swing.JButton();
         jSlider1 = new javax.swing.JSlider();
         jSpinner1 = new javax.swing.JSpinner();
+        jSpinner2 = new javax.swing.JSpinner();
+        jSpinner3 = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         paintPanel = new app.PaintPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("RescueFramework");
+        setTitle("RaktárPakolás");
         setMinimumSize(new java.awt.Dimension(1200, 800));
         setSize(new java.awt.Dimension(1200, 800));
 
@@ -131,6 +135,18 @@ public class MainFrame extends javax.swing.JFrame{
         jSpinner1.setFocusable(false);
 
         jLabel3.setText("Robots:");
+        
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 6));
+        jSpinner2.setFocusable(false);
+        jSpinner2.setValue(15);
+
+        jLabel5.setText("Width:");
+        
+        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 6));
+        jSpinner3.setFocusable(false);
+        jSpinner3.setValue(13);
+
+        jLabel6.setText("Height:");
 
         jLabel4.setText("Autostep speed:");
 
@@ -144,6 +160,14 @@ public class MainFrame extends javax.swing.JFrame{
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,6 +196,10 @@ public class MainFrame extends javax.swing.JFrame{
                         .addComponent(jButton1)
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)
+                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)
+                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
                         .addComponent(jButton3)
                         .addComponent(jLabel4)))
                 .addGap(13, 13, 13))
@@ -193,11 +221,13 @@ public class MainFrame extends javax.swing.JFrame{
         // Save selected map and agent count
         //String map = jComboBox1.getSelectedItem()+"";
         int agentCount = (Integer)jSpinner1.getValue();
+        int w = (Integer)jSpinner2.getValue();
+        int h = (Integer)jSpinner3.getValue();
         //Settings.setString("map", map);
         Settings.setInt("agent_count", agentCount);
         
-        // Load the map from file
-        App.map.Set(18, 18, 2, 4, agentCount);
+        // Load the map 
+        App.map.Set(h, w, 5, 2, agentCount);
         App.finished = false;
         
         // Update the GUI and disable autostep
@@ -271,11 +301,15 @@ public class MainFrame extends javax.swing.JFrame{
     private javax.swing.JButton jButton3; 	// single step
     private javax.swing.JButton jButton4; 	//reset/resume
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel3;		//Robots
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;		//With
+    private javax.swing.JLabel jLabel6;		//Height
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSlider jSlider1;	//speed
     private javax.swing.JSpinner jSpinner1;	//ágens szám
+    private javax.swing.JSpinner jSpinner2;	//szélesség
+    private javax.swing.JSpinner jSpinner3;	//magasság
     // End of variables declaration//GEN-END:variables
 
  

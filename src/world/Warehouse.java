@@ -27,7 +27,7 @@ public class Warehouse implements Drawable {
     // egy csomag telep méretei
     int xLen;
     int yLen;
-    Random r = new Random();
+    Random r = new Random(42);
 
     public Warehouse() {
     	time = 0;
@@ -49,8 +49,8 @@ public class Warehouse implements Drawable {
 
     public void Draw(@SuppressWarnings("exports") Graphics2D g, int size) {
   
-        for (int i=0; i<h+2; i+=1) 
-        	for (int j=0; j<w+2; j+=1) 
+        for (int i=0; i<w+2; i+=1) 
+        	for (int j=0; j<h+2; j+=1) 
             	tiles[i][j].Draw(g, size);
 
     }
@@ -83,7 +83,7 @@ public class Warehouse implements Drawable {
                 tiles[j][i].SetNeighbours(tiles[j][i - 1], tiles[j + 1][i], tiles[j][i + 1], tiles[j - 1][i]);
 
         //tárgyak elhelyezése:
-        //falak a szélére
+        //falak a szélére és középre
         for (int i = 0; i < h + 2; i++){
             tiles[0][i].Add(new Obstacle(tiles[0][i]));
             tiles[w + 1][i].Add(new Obstacle(tiles[w+1][i]));
@@ -92,16 +92,25 @@ public class Warehouse implements Drawable {
             tiles[j][0].Add(new Obstacle(tiles[j][0]));
             tiles[j][h + 1].Add(new Obstacle(tiles[j][h+1]));
         }
-        //csomagok 80% os kitöltöttséggel
+        for (int i = 0; i < h + 1; i++){
+            if (Math.abs(i-1-(int)h/2) > 1)
+            	tiles[(int)w/2+1][i].Add(new Obstacle(tiles[(int)w/2+1][i]));
+        }
+
+        //csomagok 90% os kitöltöttséggel
         for (int i = 0; i < (w - 1) / (yLen + 1); i++)
             for (int j = 0; j < (h - 1) / (xLen + 1); j++)
-                if (r.nextInt(10) > 2)
-                    for (int ii = 2; ii < 2 + yLen; ii++)
-                        for (int jj = 2; jj < 2 + xLen; jj++)
-                            tiles[j * (xLen + 1) + jj][i * (yLen + 1) + ii].Add(new Package(tiles[j * (xLen + 1) + jj][i * (yLen + 1) + ii]));
-
+                if (r.nextInt(10) > 1)
+                    for (int ii = 2; ii < 2 + yLen; ii++) {
+                		int shift = 0;
+                		if (i >= (w - 1)/2 / (yLen + 1))
+                			shift = 2;
+                		for (int jj = 2; jj < 2 + xLen; jj++)
+                			tiles[i * (yLen + 1) + ii + shift][j * (xLen + 1) + jj].Add(new Package(tiles[i * (yLen + 1) + ii + shift][j * (xLen + 1) + jj]));
+                    	}
+        
         //n db targonca létrehozása
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < Math.min((w - 1)/2,n); i++)
             robots.add(new Robot(tiles[i + 1][h], (float)(i+1)/n));
     }
     
@@ -119,15 +128,29 @@ public class Warehouse implements Drawable {
 	        while ((row = csvReader.readLine()) != null) {
 	            String[] data = row.split(";");
 	            
-	            int fromX, fromY, toX, toY;
+	            int fromXBlock, fromYBlock, fromXinBlock, fromYinBlock, toXBlock, toYBlock, toXinBlock, toYinBlock;
 	
-	            fromX = Integer.parseInt(data[0]);
-	            fromY = Integer.parseInt(data[1]);
-	            toX = Integer.parseInt(data[2]);
-	            toY = Integer.parseInt(data[3]);
+	            fromXBlock = Integer.parseInt(data[0]);
+	            fromYBlock = Integer.parseInt(data[1]);
+	            fromXinBlock = Integer.parseInt(data[2]);
+	            fromYinBlock = Integer.parseInt(data[3]);
+	            toXBlock = Integer.parseInt(data[4]);
+	            toYBlock = Integer.parseInt(data[5]);
+	            toXinBlock = Integer.parseInt(data[6]);
+	            toYinBlock = Integer.parseInt(data[7]);
+	            
+	            int fromX, fromY, toX, toY;
+	            fromX = fromXBlock * (yLen+1) + fromXinBlock+2;
+	            fromY = fromYBlock * (xLen+1) + fromYinBlock+2;
+	            toX = toXBlock * (yLen+1) + toXinBlock+2;
+	            toY = toYBlock * (xLen+1) + toYinBlock+2;
+	            if (fromX > (w - 1)/2)
+	            	fromX += 2;
+	            if (toX > (w - 1)/2)
+	            	toX += 2;
 	
 	            // cél beállítása, ha lehet
-	            if (fromX > 0 && fromY > 0 && toX > 0 && toY > 0 && fromX < h + 1 && fromY < w + 1 && toX < h + 1 && toY < w + 1)
+	            if (fromX > 0 && fromY > 0 && toX > 0 && toY > 0 && fromX < w + 1 && fromY < h + 1 && toX < w + 1 && toY < h + 1)
 	            {
 	                //elhelyezzük a mapen a célcsomagokat
 	            	Package p =new Package(tiles[fromX][fromY]);
@@ -147,8 +170,7 @@ public class Warehouse implements Drawable {
         }catch(Exception e) {
         	
         }
-    }
-    
+    }   
 
     //minden targoncát léptet, ha már nem lépnek falseal tér vissza
     public boolean Step(){
@@ -158,9 +180,7 @@ public class Warehouse implements Drawable {
             boolean tmp = r.step(tiles);
             if (tmp) ret = true;
         }
-        
         App.refresh();
-        
         return ret;
     }
     

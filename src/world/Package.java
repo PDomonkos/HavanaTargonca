@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 
 import app.App;
 
-//TODO target package osztály, vagy egy flag
-//TODO esetleg tudja a célját
 
 public class Package extends Thing {
 	

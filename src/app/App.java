@@ -27,7 +27,7 @@ public class App {
      * @param args      The command line arguments
      */
     public static void main(String[] args) {
-        Settings.load();
+        //Settings.load();
         map = new Warehouse();
         aStar = new AStar();
         mainFrame = new MainFrame();
