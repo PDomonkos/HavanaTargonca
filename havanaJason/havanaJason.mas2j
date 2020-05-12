@@ -1,0 +1,12 @@
+MAS havanaJason {
+
+	infrastructure: Centralised
+
+	environment: jasonEnv.Env
+
+	agents:
+		agent1 sample_agent;
+
+	aslSourcePath:
+		"src/asl";
+}
