@@ -26,10 +26,9 @@ public class Env extends Environment {
         try {
 			addPercept(ASSyntax.parseLiteral("percept(demo)"));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        myApp = new App();
+        myApp = new App(this);
     }
 
     @Override
@@ -45,5 +44,11 @@ public class Env extends Environment {
     @Override
     public void stop() {
         super.stop();
+    }
+    
+    public void startAuction(int agentCount) {
+    	//ide esetleg robotok létrehozása, a megadott számmal
+    	//meg ez minden induláskor fusson le
+    	addPercept("auctioner", Literal.parseLiteral("restart"));
     }
 }

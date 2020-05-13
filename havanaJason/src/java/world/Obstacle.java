@@ -9,6 +9,7 @@ public class Obstacle extends Thing {
 	
 	public Obstacle(Tile t) {
 		super(t);
+		t.Add(this);
 	}
 	
     public void Draw(@SuppressWarnings("exports") Graphics2D g, int size)

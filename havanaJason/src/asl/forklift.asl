@@ -1,4 +1,4 @@
-// Agent sample_agent in project havanaJason
+// Agent forklift in project havanaJason
 
 /* Initial beliefs and rules */
 

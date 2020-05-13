@@ -16,6 +16,8 @@ public class Warehouse implements Drawable {
     Tile[][] tiles;
     //targoncák
     List<Robot> robots;
+    //még el nem vitt csomagok
+    List<Package> packagePool;
     //magasság 
     int h;
     //szélesség
@@ -67,6 +69,7 @@ public class Warehouse implements Drawable {
     private void Generate(int n){
         tiles = new Tile[w+2][h+2];
         robots = new ArrayList<Robot>();
+        packagePool = new ArrayList<Package>();
 
         //csempék létrehozása +paddinggal
         //tiles[x koordináta balról nõ][y koordináta lefelé nõ]
@@ -85,16 +88,16 @@ public class Warehouse implements Drawable {
         //tárgyak elhelyezése:
         //falak a szélére és középre
         for (int i = 0; i < h + 2; i++){
-            tiles[0][i].Add(new Obstacle(tiles[0][i]));
-            tiles[w + 1][i].Add(new Obstacle(tiles[w+1][i]));
+        	new Obstacle(tiles[0][i]);
+            new Obstacle(tiles[w+1][i]);
         }
         for (int j = 1; j < w + 1; j++){
-            tiles[j][0].Add(new Obstacle(tiles[j][0]));
-            tiles[j][h + 1].Add(new Obstacle(tiles[j][h+1]));
+        	new Obstacle(tiles[j][0]);
+            new Obstacle(tiles[j][h+1]);
         }
         for (int i = 0; i < h + 1; i++){
             if (Math.abs(i-1-(int)h/2) > 1)
-            	tiles[(int)w/2+1][i].Add(new Obstacle(tiles[(int)w/2+1][i]));
+            	new Obstacle(tiles[(int)w/2+1][i]);
         }
 
         //csomagok 90% os kitöltöttséggel
@@ -106,12 +109,12 @@ public class Warehouse implements Drawable {
                 		if (i >= (w - 1)/2 / (yLen + 1))
                 			shift = 2;
                 		for (int jj = 2; jj < 2 + xLen; jj++)
-                			tiles[i * (yLen + 1) + ii + shift][j * (xLen + 1) + jj].Add(new Package(tiles[i * (yLen + 1) + ii + shift][j * (xLen + 1) + jj]));
-                    	}
+                			new Package(tiles[i * (yLen + 1) + ii + shift][j * (xLen + 1) + jj]);
+                    }
         
         //n db targonca létrehozása
-        for (int i = 0; i < Math.min((w - 1)/2,n); i++)
-            robots.add(new Robot(tiles[i + 1][h], (float)(i+1)/n));
+        for (int i = 0; i < Math.min((w - 1)/2,n); i++) 
+        	robots.add(new Robot(tiles[i + 1][h], (float)(i+1)/n));
     }
     
     //targoncák céljainak beállítása
@@ -149,22 +152,10 @@ public class Warehouse implements Drawable {
 	            if (toX > (w - 1)/2)
 	            	toX += 2;
 	
-	            // cél beállítása, ha lehet
+	            // céllal rendelkezõ csomagok
 	            if (fromX > 0 && fromY > 0 && toX > 0 && toY > 0 && fromX < w + 1 && fromY < h + 1 && toX < w + 1 && toY < h + 1)
-	            {
-	                //elhelyezzük a mapen a célcsomagokat
-	            	Package p =new Package(tiles[fromX][fromY]);
-	            	p.setDest(new Position(toX,toY), robots.get(count % robots.size()).getColor());
-	                tiles[fromX][fromY].Add(p);
-	
-	                //sorba a targoncáknak beállítjuk a célokat, verembe elõszõr a cél, utána a kiindulás, mert fordítva szedi ki
-	                //itt is lehetne optimalizálni
-	                robots.get(count % robots.size()).addDestination(new Position(toX, toY));
-	                robots.get(count % robots.size()).addDestination(new Position(fromX, fromY));
-	                
-	                count++;
-	            }
-	                        
+	            	packagePool.add(new Package(tiles[fromX][fromY],new Position(toX,toY)));
+          
 	        }
 	        csvReader.close();
         }catch(Exception e) {

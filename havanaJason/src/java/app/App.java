@@ -25,7 +25,7 @@ public class App {
     // The map the simulator uses
     static Warehouse map = null;
     public static AStar aStar = null;
-    public static Env env;
+    public static Env env = null;
     
     // Image cache for loading every image only once
     private static HashMap<String,BufferedImage> imageCache = new HashMap();
@@ -35,11 +35,13 @@ public class App {
      * Main method of the application
      * @param args      The command line arguments
      */
-    public App() {
+    public App(Env e) {
     	map = new Warehouse();
         aStar = new AStar();
+        env = e;
         mainFrame = new MainFrame();
         mainFrame.setVisible(true); 
+        
     }
     
     /**

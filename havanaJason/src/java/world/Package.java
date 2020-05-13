@@ -12,9 +12,15 @@ public class Package extends Thing {
 	Position dest = null;
 	Color myColor = Color.gray;
 	
-	
 	public Package(Tile t) {
 		super(t);
+		t.Add(this);
+	}
+	
+	public Package(Tile t, Position d) {
+		super(t);
+		t.Add(this);
+		dest = d;
 	}
 	
     public void Draw(@SuppressWarnings("exports") Graphics2D g,int size)
@@ -36,9 +42,21 @@ public class Package extends Thing {
         return 9999999;
     }
     
-    // ha van célja
-    public void setDest(Position d, @SuppressWarnings("exports") Color c) {
-    	dest = d;
+    public void setColor(@SuppressWarnings("exports") Color c) {
     	myColor = c;
+    }
+    
+    public int GetDestX() {
+    	if (dest != null)
+    		return dest.GetX();
+    	else
+    		return -1;
+    }
+    
+    public int GetDestY() {
+    	if (dest != null)
+    		return dest.GetY();
+    	else
+    		return -1;
     }
 }

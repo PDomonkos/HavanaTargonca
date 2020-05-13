@@ -230,6 +230,8 @@ public class MainFrame extends javax.swing.JFrame{
         App.map.Set(h, w, 5, 2, agentCount);
         App.finished = false;
         
+        App.env.startAuction(agentCount);
+        
         // Update the GUI and disable autostep
         jButton4.setText("Start");
         if (stepThread != null) stepThread.disable();
