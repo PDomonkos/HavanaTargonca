@@ -11,5 +11,14 @@
 +restart 
 	: true 
 	<- .print("restarted");
-	   +-startAuction;
-	   -restart.
+	   //+startAuction;
+	   //-+restart.
+	   .
+
++createAgents
+	 : true
+	 <-
+	 while(agentCount(X)  & X > 0) { 
+       -+agentCount(X+1);
+       .print(agentCount(X));
+     }.
