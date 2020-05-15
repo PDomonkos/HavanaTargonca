@@ -97,6 +97,5 @@ public class Env extends Environment {
     	clearPercepts("auctioner");
 		addPercept("auctioner", Literal.parseLiteral("agentCount("+String.valueOf(agentCount)+")"));
         addPercept("auctioner", Literal.parseLiteral("restart"));
-		//addPercept("auctioner", Literal.parseLiteral("createAgents"));
     }
 }
