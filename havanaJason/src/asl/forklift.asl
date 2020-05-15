@@ -9,3 +9,10 @@
 /* Plans */
 
 +!start : true <- .print("hello world.").
+
++youShouldBid : true 
+    <- .print("RECEIVED BID REQUEST");
+    do(bid).
+    
+
++bid(X) : true <- .print("SENDING BID",X); .send(auctioner,tell,placeBid(X)).

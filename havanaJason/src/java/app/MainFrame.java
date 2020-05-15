@@ -93,7 +93,7 @@ public class MainFrame extends javax.swing.JFrame{
         paintPanel = new app.PaintPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("RaktárPakolás");
+        setTitle("Raktï¿½rPakolï¿½s");
         setMinimumSize(new java.awt.Dimension(1200, 800));
         setSize(new java.awt.Dimension(1200, 800));
 
@@ -314,9 +314,9 @@ public class MainFrame extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel6;		//Height
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSlider jSlider1;	//speed
-    private javax.swing.JSpinner jSpinner1;	//ágens szám
-    private javax.swing.JSpinner jSpinner2;	//szélesség
-    private javax.swing.JSpinner jSpinner3;	//magasság
+    private javax.swing.JSpinner jSpinner1;	//ï¿½gens szï¿½m
+    private javax.swing.JSpinner jSpinner2;	//szï¿½lessï¿½g
+    private javax.swing.JSpinner jSpinner3;	//magassï¿½g
     // End of variables declaration//GEN-END:variables
 
  

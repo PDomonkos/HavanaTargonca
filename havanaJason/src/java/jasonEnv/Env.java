@@ -74,11 +74,21 @@ public class Env extends Environment {
     }
     
     private int getAgIdBasedOnName(String agName) {
-        return (Integer.parseInt(agName.substring(9))) - 1;
+        int id = -1;
+        if (agName.contains("_")) {
+            id = (Integer.parseInt(agName.split("_")[1]));
+        } else {
+            id = 0;
+        }
+        return id;
+
     }
     
     private void updateAgPercept(int agId, int value) {
-    	String agName = "forklift" + (agId + 1);
+        String agName = "forklift" + (agId + 1);
+        if (agId == 0) {
+            agName = "forklift";
+        }
         clearPercepts(agName);
         addPercept(agName, Literal.parseLiteral("bid(" + value +")"));
     }
@@ -89,9 +99,9 @@ public class Env extends Environment {
     }
     
     public void startAuction(int agentCount) {
-		agentCount=10;
-		addPercept("auctioner", Literal.parseLiteral("restart"));
+    	clearPercepts("auctioner");
 		addPercept("auctioner", Literal.parseLiteral("agentCount("+String.valueOf(agentCount)+")"));
-		addPercept("auctioner", Literal.parseLiteral("createAgents"));
+        addPercept("auctioner", Literal.parseLiteral("restart"));
+		//addPercept("auctioner", Literal.parseLiteral("createAgents"));
     }
 }
