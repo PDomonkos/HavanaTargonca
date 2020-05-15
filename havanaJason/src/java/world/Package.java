@@ -38,7 +38,7 @@ public class Package extends Thing {
         }
     }
 
-    public int Cost(){
+    public int Cost(boolean test){
         return 9999999;
     }
     

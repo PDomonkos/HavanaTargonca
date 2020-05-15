@@ -90,6 +90,7 @@ public class Env extends Environment {
     
     public void updateAuctPercept(boolean end) {
     	if (end)
+    		clearPercepts("auctioner");
     		addPercept("auctioner", Literal.parseLiteral("end"));
     }
     
@@ -97,5 +98,9 @@ public class Env extends Environment {
     	clearPercepts("auctioner");
 		addPercept("auctioner", Literal.parseLiteral("agentCount("+String.valueOf(agentCount)+")"));
         addPercept("auctioner", Literal.parseLiteral("restart"));
+        
+        System.err.println("-------------------------------RESTART-----------------------------------" + agentCount);
+        System.err.flush();
+        
     }
 }

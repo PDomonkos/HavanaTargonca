@@ -64,8 +64,10 @@ public class Robot extends Thing{
     }
 
     //�tk�z�s heurisztik�ja, v�gtelen (de id�belis�get nem figyel)
-    public int Cost(){
-        return 999;
+    public int Cost(boolean test){
+        if (test)
+        	return 0;
+    	return 999;
     }
 
     public void addDestination(Position p){
@@ -116,9 +118,9 @@ public class Robot extends Thing{
     
 /////////////////////////////////////////////////////////////////////////////////
     public int bid() {
-    	if (myLastBidPackage != null && App.map.isPInPackages(myLastBidPackage))
-    		return myLastBidValue;
-    	
+    	if (myLastBidPackage != null && App.map.isPInPackages(myLastBidPackage)) 
+    		return myLastSumPath;
+	
         int bestSumPath = 999999;
     	int bestIndex = -1;
     	Package bestPackage = null;
@@ -137,7 +139,6 @@ public class Robot extends Thing{
         		
         		int newSumPath = 0;
         		List<Position> newPath = new ArrayList<Position>();
-        		newPath.add(new Position(GetX(),GetY()));
         		for (Package pp : tmp2) {
         			newPath.add(new Position(pp.GetX(),pp.GetY()));
         			newPath.add(new Position(pp.GetDestX(),pp.GetDestY()));
@@ -163,12 +164,11 @@ public class Robot extends Thing{
         lastIndex = bestIndex;
         myLastSumPath = bestSumPath;
         
-    	return myLastBidValue;
+    	return myLastSumPath;
     }
     
     public void win() {
     	Package p = myLastBidPackage;
-    	myLastBidPackage = null;
     	myLastBidValue = 0;
     	p.setColor(myColor);   	
     	App.refresh();
@@ -176,12 +176,14 @@ public class Robot extends Thing{
     	myGoalPackages.add(lastIndex, p);
     	lastIndex = -1;
     	sumPath = myLastSumPath;
+    	myLastBidPackage = null;
     }
     
     public void getReady() {
     	if (myGoalPackages != null) {
     		// ezt lehet ford�tva kell bej�rni
-    		for (Package p : myGoalPackages) {
+    		for (int counter = myGoalPackages.size() - 1; counter >= 0; counter--) {
+    			Package p = myGoalPackages.get(counter);
     			addDestination(new Position(p.GetDestX(), p.GetDestY()));
     	    	addDestination(new Position(p.GetX(), p.GetY()));
     		}

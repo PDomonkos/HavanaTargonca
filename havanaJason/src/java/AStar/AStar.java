@@ -60,7 +60,7 @@ public class AStar {
                 }
 
                 // különben értékek számolása
-                c.G = q.G + 1 + tiles[c.GetX()][c.GetY()].Cost();
+                c.G = q.G + 1 + tiles[c.GetX()][c.GetY()].Cost(false);
                 c.H = Math.abs(c.GetX() - destination.GetX()) + Math.abs(c.GetY() - destination.GetY());
                 c.F = c.H + c.G;
 
@@ -136,7 +136,7 @@ public class AStar {
                 }
 
                 // különben értékek számolása
-                c.G = q.G + 1 + tiles[c.GetX()][c.GetY()].Cost();
+                c.G = q.G + 1 + tiles[c.GetX()][c.GetY()].Cost(true);
                 c.H = Math.abs(c.GetX() - destination.GetX()) + Math.abs(c.GetY() - destination.GetY());
                 c.F = c.H + c.G;
 

@@ -90,11 +90,11 @@ public class Tile implements Drawable, Searchable {
 
     }
 
-    public int Cost()
+    public int Cost(boolean test)
     {
         if (myThing != null)
         {
-            return myThing.Cost();
+            return myThing.Cost(test);
         }
         else
         {
