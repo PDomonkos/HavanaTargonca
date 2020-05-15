@@ -51,7 +51,7 @@ public class Env extends Environment {
                  myApp.map.win(agId);
             	 return true;
              } else if (action.equals(start)) {
-                 //start gombot enable-li
+                 myApp.enableStart();
             	 myApp.map.auctionStart();
             	 return true;
              }  else {

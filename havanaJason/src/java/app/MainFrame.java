@@ -234,6 +234,11 @@ public class MainFrame extends javax.swing.JFrame{
         
         // Update the GUI and disable autostep
         jButton4.setText("Start");
+        
+        jButton4.setEnabled(false);
+        jButton3.setEnabled(false);
+        
+        
         if (stepThread != null) stepThread.disable();
         refresh();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -321,5 +326,10 @@ public class MainFrame extends javax.swing.JFrame{
      */
     public int getSimulationSpeed() {
         return (100-jSlider1.getValue())+3;
+    }
+    
+    public void enableStart() {
+    	jButton4.setEnabled(true);
+        jButton3.setEnabled(true);
     }
 }

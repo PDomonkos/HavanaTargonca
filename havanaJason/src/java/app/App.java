@@ -96,5 +96,9 @@ public class App {
             return imageCache.get(image);
         }
     }
+    
+    public void enableStart() {
+    	mainFrame.enableStart();
+    }
 }
     
