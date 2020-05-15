@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import app.App;
 import world.Direction;
 import world.Position;
 import world.Tile;
@@ -85,8 +86,9 @@ public class AStar {
     }
 	
 //////////////////////////////////////////////////////////////////////////////////////////////
-	public int getDist(Tile[][] tiles, Position start, Position destination){
-        int ret = 0;
+	public int getDist(Position start, Position destination){
+		Tile[][] tiles = App.map.getTiles();
+		int ret = 0;
 		boolean finish = false;
 
         //init + kezdõ pont hozzáadása

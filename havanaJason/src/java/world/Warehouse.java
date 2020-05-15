@@ -211,4 +211,9 @@ public class Warehouse implements Drawable {
     public List<Package> getPackages(){
     	return packagePool;
     }
+    
+    public Tile[][] getTiles(){
+    	return tiles;
+    }
+    
 }
