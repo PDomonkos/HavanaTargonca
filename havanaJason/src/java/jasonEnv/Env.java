@@ -90,11 +90,9 @@ public class Env extends Environment {
     }
     
     public void startAuction(int agentCount) {
-    	//ide esetleg robotok létrehozása, a megadott számmal
-    	//meg ez minden induláskor fusson le
-    	
-    	clearPercepts("auctioner");
-    	addPercept("auctioner", Literal.parseLiteral("restart"));
-
+		agentCount=10;
+		addPercept("auctioner", Literal.parseLiteral("restart"));
+		addPercept("auctioner", Literal.parseLiteral("agentCount("+String.valueOf(agentCount)+")"));
+		addPercept("auctioner", Literal.parseLiteral("createAgents"));
     }
 }
