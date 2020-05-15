@@ -96,7 +96,7 @@ public class Robot extends Thing{
                 myPackage = (Package)tiles[destination.GetX()][destination.GetY()].Remove();
             	myPackage.setTile(myTile);
             }
-            else{
+            else{ 
                 tiles[destination.GetX()][destination.GetY()].Add(myPackage);
                 myPackage = null;
             }
@@ -116,28 +116,55 @@ public class Robot extends Thing{
     
 /////////////////////////////////////////////////////////////////////////////////
     public int bid() {
-        return 10;
-    	/*if (myLastBidPackage != null && App.map.isPInPackages(myLastBidPackage))
+    	if (myLastBidPackage != null && App.map.isPInPackages(myLastBidPackage))
     		return myLastBidValue;
     	
-    	myLastBidPackage = null;
-        myLastBidValue = 999999;
-        lastIndex = -1;
-        myLastSumPath = 0;
-        
+        int bestSumPath = 999999;
+    	int bestIndex = -1;
+    	Package bestPackage = null;
+    	
         for (Package p : App.map.getPackages()) {
-        	int bestBid = 999999;
         	List<Package> tmp;
         	if (myGoalPackages == null) 
         		tmp = new ArrayList();
         	else
         		tmp = new ArrayList(myGoalPackages);
+        	
         	int attempts = tmp.size();
-        	for (int i = 0; i< attmepts)
+        	for (int i = 0; i< attempts+1; i++) {
+        		List<Package> tmp2 = new ArrayList(tmp);
+        		tmp2.add(i,p);
+        		
+        		//számolni
+        		int newSumPath = 0;
+        		List<Position> newPath = new ArrayList<Position>();
+        		newPath.add(new Position(GetX(),GetY()));
+        		for (Package pp : tmp2) {
+        			newPath.add(new Position(pp.GetX(),pp.GetY()));
+        			newPath.add(new Position(pp.GetDestX(),pp.GetDestY()));
+        		}
+        		
+        		Position start = new Position(GetX(),GetY());
+        		for (Position pos : newPath) {
+        			newSumPath += App.aStar.getDist(start, pos);
+        			start = pos;
+        		}
+        		
+        		if (newSumPath < bestSumPath) {
+        			bestIndex = i;
+        			bestSumPath = newSumPath;
+        			bestPackage = p;	
+        		}
+        	}
         	
         }
         
-    	return myLastBidValue;*/
+        myLastBidPackage = bestPackage;
+        myLastBidValue = bestSumPath-sumPath;
+        lastIndex = bestIndex;
+        myLastSumPath = bestSumPath;
+        
+    	return myLastBidValue;
     }
     
     public void win() {
