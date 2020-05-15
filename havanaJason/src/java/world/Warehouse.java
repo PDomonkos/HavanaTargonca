@@ -35,7 +35,7 @@ public class Warehouse implements Drawable {
     	time = 0;
     }
     
-    public void Set(int H, int W, int BH, int BW, int N) {
+    public int Set(int H, int W, int BH, int BW, int N) {
         h = H;
         w = W;
         xLen = BH;
@@ -43,10 +43,12 @@ public class Warehouse implements Drawable {
         
         time = 0;
        
-        Generate(N);
+        int ret = Generate(N);
         SetGoals("goals.csv");
         
         App.refresh();
+        
+        return ret;
     }
 
     public void Draw(@SuppressWarnings("exports") Graphics2D g, int size) {
@@ -66,7 +68,7 @@ public class Warehouse implements Drawable {
     }
     
     //p�lya gener�l�sa n db robottal
-    private void Generate(int n){
+    private int Generate(int n){
         tiles = new Tile[w+2][h+2];
         robots = new ArrayList<Robot>();
         packagePool = new ArrayList<Package>();
@@ -115,6 +117,8 @@ public class Warehouse implements Drawable {
         //n db targonca l�trehoz�sa
         for (int i = 0; i < Math.min((w - 1)/2,n); i++) 
         	robots.add(new Robot(tiles[i + 1][h], (float)(i+1)/n));
+        
+        return Math.min((w - 1)/2,n);
     }
     
     //targonc�k c�ljainak be�ll�t�sa

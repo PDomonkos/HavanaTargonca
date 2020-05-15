@@ -227,10 +227,12 @@ public class MainFrame extends javax.swing.JFrame{
         Settings.setInt("agent_count", agentCount);
         
         // Load the map 
-        App.map.Set(h, w, 5, 2, agentCount);
+        int count = App.map.Set(h, w, 5, 2, agentCount);
         App.finished = false;
         
-        App.env.startAuction(agentCount);
+        App.env.startAuction(count);
+        Settings.setInt("agent_count", count);
+        jSpinner1.setValue(count);
         
         // Update the GUI and disable autostep
         jButton4.setText("Start");
