@@ -9,16 +9,16 @@ import java.util.Stack;
 import app.App;
 
 public class Robot extends Thing{
-	//célok koordinátái
+	//cï¿½lok koordinï¿½tï¿½i
     Stack<Position> dest;
-    //útvonal
+    //ï¿½tvonal
     List<Direction> path = new ArrayList<Direction>();
-    //szállított csomag
+    //szï¿½llï¿½tott csomag
     private Package myPackage;
-    // egyéni szín
+    // egyï¿½ni szï¿½n
     private Color myColor = Color.blue;
 
-    //szavazás miatt
+    //szavazï¿½s miatt
     private List<Package> myGoalPackages;
     private Package myLastBidPackage = null;
     private int myLastBidValue = 0;
@@ -63,7 +63,7 @@ public class Robot extends Thing{
 
     }
 
-    //ütközés heurisztikája, végtelen (de idõbeliséget nem figyel)
+    //ï¿½tkï¿½zï¿½s heurisztikï¿½ja, vï¿½gtelen (de idï¿½belisï¿½get nem figyel)
     public int Cost(){
         return 999;
     }
@@ -72,26 +72,26 @@ public class Robot extends Thing{
         dest.push(p);
     }
 
-    //nem vár ha ütközés lenne, hanem másmerre megy 
-    //Egy lépést tesz a soron következõ célja felé
+    //nem vï¿½r ha ï¿½tkï¿½zï¿½s lenne, hanem mï¿½smerre megy 
+    //Egy lï¿½pï¿½st tesz a soron kï¿½vetkezï¿½ cï¿½lja felï¿½
     public boolean step(Tile[][] tiles){
-        //ha nincs már célja akkor nem csinál semmit, false-al tér vissza
+        //ha nincs mï¿½r cï¿½lja akkor nem csinï¿½l semmit, false-al tï¿½r vissza
         if (dest.size() == 0) return false;
 
-        //cél koorináták
+        //cï¿½l koorinï¿½tï¿½k
         Position destination = dest.peek();
 
-        //útvonaltervezés
+        //ï¿½tvonaltervezï¿½s
         path = App.aStar.goTo(tiles, new Position(GetX(),GetY()),destination);
 
-        //egy lépés a cél felé
+        //egy lï¿½pï¿½s a cï¿½l felï¿½
         move(path.get(0));
 
-        //ha a cél mellé érünk, akkor kivesszük az adott célt a listából, és lerakjuk/felvesszük a szállítmányt
+        //ha a cï¿½l mellï¿½ ï¿½rï¿½nk, akkor kivesszï¿½k az adott cï¿½lt a listï¿½bï¿½l, ï¿½s lerakjuk/felvesszï¿½k a szï¿½llï¿½tmï¿½nyt
         if ((destination.GetX() == GetX() && Math.abs(destination.GetY()-GetY())==1) || (destination.GetY() == GetY() && Math.abs(destination.GetX() - GetX()) == 1))
         {
             dest.pop();
-            //ha nem viszünk csomagot felvesszük azt, különben lerakjuk
+            //ha nem viszï¿½nk csomagot felvesszï¿½k azt, kï¿½lï¿½nben lerakjuk
             if (myPackage == null) {
                 myPackage = (Package)tiles[destination.GetX()][destination.GetY()].Remove();
             	myPackage.setTile(myTile);
@@ -104,8 +104,8 @@ public class Robot extends Thing{
             if (dest.size() == 0) return false;
         }
 
-//lehetne itt falseal visszatérni és legközebb be se lépne
-        // igazzal tér vissza
+//lehetne itt falseal visszatï¿½rni ï¿½s legkï¿½zebb be se lï¿½pne
+        // igazzal tï¿½r vissza
         return true;
     }
     
@@ -116,7 +116,8 @@ public class Robot extends Thing{
     
 /////////////////////////////////////////////////////////////////////////////////
     public int bid() {
-    	if (myLastBidPackage != null && App.map.isPInPackages(myLastBidPackage))
+        return 10;
+    	/*if (myLastBidPackage != null && App.map.isPInPackages(myLastBidPackage))
     		return myLastBidValue;
     	
     	myLastBidPackage = null;
@@ -136,7 +137,7 @@ public class Robot extends Thing{
         	
         }
         
-    	return myLastBidValue;
+    	return myLastBidValue;*/
     }
     
     public void win() {
@@ -152,7 +153,7 @@ public class Robot extends Thing{
     
     public void getReady() {
     	if (myGoalPackages != null) {
-    		// ezt lehet fordítva kell bejárni
+    		// ezt lehet fordï¿½tva kell bejï¿½rni
     		for (Package p : myGoalPackages) {
     			addDestination(new Position(p.GetDestX(), p.GetDestY()));
     	    	addDestination(new Position(p.GetX(), p.GetY()));

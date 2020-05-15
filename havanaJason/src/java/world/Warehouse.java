@@ -12,21 +12,21 @@ import app.App;
 import app.Drawable;
 
 public class Warehouse implements Drawable {
-	//csempék
+	//csempï¿½k
     Tile[][] tiles;
-    //targoncák
+    //targoncï¿½k
     List<Robot> robots;
-    //még el nem vitt csomagok
+    //mï¿½g el nem vitt csomagok
     List<Package> packagePool;
-    //magasság 
+    //magassï¿½g 
     int h;
-    //szélesség
+    //szï¿½lessï¿½g
     int w;
-    // eltelt idõ
+    // eltelt idï¿½
     int time;
     
-    //ezek csak mert random csinál csomagokat magára
-    // egy csomag telep méretei
+    //ezek csak mert random csinï¿½l csomagokat magï¿½ra
+    // egy csomag telep mï¿½retei
     int xLen;
     int yLen;
     Random r = new Random(42);
@@ -65,14 +65,14 @@ public class Warehouse implements Drawable {
     	return w+2;
     }
     
-    //pálya generálása n db robottal
+    //pï¿½lya generï¿½lï¿½sa n db robottal
     private void Generate(int n){
         tiles = new Tile[w+2][h+2];
         robots = new ArrayList<Robot>();
         packagePool = new ArrayList<Package>();
 
-        //csempék létrehozása +paddinggal
-        //tiles[x koordináta balról nõ][y koordináta lefelé nõ]
+        //csempï¿½k lï¿½trehozï¿½sa +paddinggal
+        //tiles[x koordinï¿½ta balrï¿½l nï¿½][y koordinï¿½ta lefelï¿½ nï¿½]
         for (int i = 0; i < h + 2; i++){
             for (int j = 0; j < w + 2; j++){
                 Tile t = new Tile(j, i);
@@ -80,13 +80,13 @@ public class Warehouse implements Drawable {
             }
         }
 
-        //szomszédok beállítása padding nélkül
+        //szomszï¿½dok beï¿½llï¿½tï¿½sa padding nï¿½lkï¿½l
         for (int i = 1; i < h + 1; i++)
             for (int j = 1; j < w + 1; j++)
                 tiles[j][i].SetNeighbours(tiles[j][i - 1], tiles[j + 1][i], tiles[j][i + 1], tiles[j - 1][i]);
 
-        //tárgyak elhelyezése:
-        //falak a szélére és középre
+        //tï¿½rgyak elhelyezï¿½se:
+        //falak a szï¿½lï¿½re ï¿½s kï¿½zï¿½pre
         for (int i = 0; i < h + 2; i++){
         	new Obstacle(tiles[0][i]);
             new Obstacle(tiles[w+1][i]);
@@ -100,7 +100,7 @@ public class Warehouse implements Drawable {
             	new Obstacle(tiles[(int)w/2+1][i]);
         }
 
-        //csomagok 90% os kitöltöttséggel
+        //csomagok 90% os kitï¿½ltï¿½ttsï¿½ggel
         for (int i = 0; i < (w - 1) / (yLen + 1); i++)
             for (int j = 0; j < (h - 1) / (xLen + 1); j++)
                 if (r.nextInt(10) > 1)
@@ -112,19 +112,19 @@ public class Warehouse implements Drawable {
                 			new Package(tiles[i * (yLen + 1) + ii + shift][j * (xLen + 1) + jj]);
                     }
         
-        //n db targonca létrehozása
+        //n db targonca lï¿½trehozï¿½sa
         for (int i = 0; i < Math.min((w - 1)/2,n); i++) 
         	robots.add(new Robot(tiles[i + 1][h], (float)(i+1)/n));
     }
     
-    //targoncák céljainak beállítása
-    //paraméter: .csv fájl minden sor egy honnan hova pár (x-y koordináták)
+    //targoncï¿½k cï¿½ljainak beï¿½llï¿½tï¿½sa
+    //paramï¿½ter: .csv fï¿½jl minden sor egy honnan hova pï¿½r (x-y koordinï¿½tï¿½k)
     private void SetGoals(String goals){
-        // sor számláló
+        // sor szï¿½mlï¿½lï¿½
         int count = 0;
         String row;
         
-        //csv fájl soronkénti olvasása
+        //csv fï¿½jl soronkï¿½nti olvasï¿½sa
         try {
 	        BufferedReader csvReader = new BufferedReader(new FileReader(goals));
 	        row = csvReader.readLine();
@@ -152,7 +152,7 @@ public class Warehouse implements Drawable {
 	            if (toX > (w - 1)/2)
 	            	toX += 2;
 	
-	            // céllal rendelkezõ csomagok
+	            // cï¿½llal rendelkezï¿½ csomagok
 	            if (fromX > 0 && fromY > 0 && toX > 0 && toY > 0 && fromX < w + 1 && fromY < h + 1 && toX < w + 1 && toY < h + 1)
 	            	packagePool.add(new Package(tiles[fromX][fromY],new Position(toX,toY)));
           
@@ -163,7 +163,7 @@ public class Warehouse implements Drawable {
         }
     }   
 
-    //minden targoncát léptet, ha már nem lépnek falseal tér vissza
+    //minden targoncï¿½t lï¿½ptet, ha mï¿½r nem lï¿½pnek falseal tï¿½r vissza
     public boolean Step(){
         time += 1;
     	boolean ret = false;
