@@ -11,5 +11,5 @@
 +restart 
 	: true 
 	<- .print("restarted");
-	   -+startAuction;
+	   +-startAuction;
 	   -restart.
