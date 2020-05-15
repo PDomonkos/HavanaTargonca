@@ -178,4 +178,19 @@ public class Warehouse implements Drawable {
     public int GetTime() {
     	return time;
     }
+    
+    public int bid(int id) {
+    	int value = robots.get(id).bid();
+    	return value;
+    }
+    
+    public void win(int id) {
+    	robots.get(id).win();
+    }
+    
+    public void auctionStart() {
+    	for (Robot r : robots){
+    		r.getReady();
+    	}
+    }
 }

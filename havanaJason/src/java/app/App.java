@@ -23,7 +23,7 @@ public class App {
     // The GUI frame
     static MainFrame mainFrame = null;
     // The map the simulator uses
-    static Warehouse map = null;
+    public static Warehouse map = null;
     public static AStar aStar = null;
     public static Env env = null;
     

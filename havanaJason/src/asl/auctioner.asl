@@ -4,12 +4,11 @@
 
 /* Initial goals */
 
-
 /* Plans */
 
 +startAuction : true <- .print("started").
-+restart 
-	: true 
-	<- .print("restarted");
-	   +-startAuction;
-	   -restart.
+ 
+	
++restart :true <- 
+	.print("restarted");
+	-+startAuction.

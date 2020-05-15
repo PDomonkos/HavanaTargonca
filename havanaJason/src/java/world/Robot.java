@@ -16,14 +16,20 @@ public class Robot extends Thing{
     //szállított csomag
     private Package myPackage;
     // egyéni szín
-    private Color myColor= Color.blue;
+    private Color myColor = Color.blue;
 
+    //szavazás miatt
+    private List<Package> myGoalPackages;
+    private Package myLastBidPackage = null;
+    private int myLastBidValue = 0;
+    
     public Robot(Tile t, float c){
     	super(t);
         myPackage = null;
         t.Add(this);
         t.Inc();
         dest = new Stack<Position>();
+        myGoalPackages = new ArrayList<Package>();
         myColor = new Color(150,255-Math.round(255*c),Math.round(255*c));
     }
 
@@ -104,4 +110,21 @@ public class Robot extends Thing{
 	public Color getColor() {
     	return myColor;
     }
+    
+/////////////////////////////////////////////////////////////////////////////////
+    public int bid() {
+    	//adott robot megnézi hogy a szabad csomagok közül melyiket szúrja be a sajátjába, elmenti azt mint lehetõséget (és a bid értékét is)
+    	//ha legközelebb nem vitték el az elmentettet akkor megint azzal bidel
+    	return 1;
+    }
+    
+    public void win() {
+    	//adott robot megkapja a legutoljára szavazott csomagját
+    	//azt kivesszük a csomagok közül és színezzük
+    }
+    
+    public void getReady() {
+    	//célcsomagokat berakni a dest tömbbe
+    }
+    
 }

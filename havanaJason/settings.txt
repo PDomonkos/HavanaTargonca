@@ -1,7 +1,2 @@
-#Fri May 15 14:12:53 CEST 2020
-top=0
-left=0
-maximized=0
-width=1200
+#Fri May 15 15:20:38 CEST 2020
 agent_count=1
-height=800
