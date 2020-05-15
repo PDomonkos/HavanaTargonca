@@ -22,7 +22,8 @@ public class Env extends Environment {
 
     Term                    bid      = Literal.parseLiteral("do(bid)");
     Term                    win      = Literal.parseLiteral("do(win)");
-    Term                    start    = Literal.parseLiteral("do(startEnv)");
+    //Term					query	 = Literal.parseLiteral("do(query)");
+    //Term                    start    = Literal.parseLiteral("do(startEnv)");
     
     @Override
     public void init(String[] args) {
@@ -49,6 +50,10 @@ public class Env extends Environment {
             	 return true;
              } else if (action.equals(win)) {
                  myApp.map.win(agId);
+            	 return true;
+             } else if (action.equals(query)) {
+                 int n = myApp.map.getPNum();
+                 updateAuctPercept(n == 0);
             	 return true;
              } else if (action.equals(start)) {
                  myApp.enableStart();
@@ -77,6 +82,11 @@ public class Env extends Environment {
     	String agName = "forklift" + (agId + 1);
         clearPercepts(agName);
         addPercept(agName, Literal.parseLiteral("bid(" + value +")"));
+    }
+    
+    public void updateAuctPercept(boolean end) {
+    	if (end)
+    		addPercept("auctioner", Literal.parseLiteral("end"));
     }
     
     public void startAuction(int agentCount) {

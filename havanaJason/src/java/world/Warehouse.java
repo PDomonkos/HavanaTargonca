@@ -179,6 +179,8 @@ public class Warehouse implements Drawable {
     	return time;
     }
     
+///////////////////////////////////////////////////////
+    
     public int bid(int id) {
     	int value = robots.get(id).bid();
     	return value;
@@ -192,5 +194,21 @@ public class Warehouse implements Drawable {
     	for (Robot r : robots){
     		r.getReady();
     	}
+    }
+    
+    public void removePackage(Package p) {
+    	packagePool.remove(p);
+    }
+    
+    public int getPNum() {
+    	return packagePool.size();
+    }
+    
+    public boolean isPInPackages(Package p) {
+    	return packagePool.contains(p);
+    }
+    
+    public List<Package> getPackages(){
+    	return packagePool;
     }
 }

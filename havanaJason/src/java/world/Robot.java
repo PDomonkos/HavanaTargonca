@@ -22,6 +22,9 @@ public class Robot extends Thing{
     private List<Package> myGoalPackages;
     private Package myLastBidPackage = null;
     private int myLastBidValue = 0;
+    private int lastIndex = -1;
+    private int sumPath = 0;
+    private int myLastSumPath = 0;
     
     public Robot(Tile t, float c){
     	super(t);
@@ -113,18 +116,48 @@ public class Robot extends Thing{
     
 /////////////////////////////////////////////////////////////////////////////////
     public int bid() {
-    	//adott robot megnézi hogy a szabad csomagok közül melyiket szúrja be a sajátjába, elmenti azt mint lehetõséget (és a bid értékét is)
-    	//ha legközelebb nem vitték el az elmentettet akkor megint azzal bidel
-    	return 1;
+    	if (myLastBidPackage != null && App.map.isPInPackages(myLastBidPackage))
+    		return myLastBidValue;
+    	
+    	myLastBidPackage = null;
+        myLastBidValue = 999999;
+        lastIndex = -1;
+        myLastSumPath = 0;
+        
+        for (Package p : App.map.getPackages()) {
+        	int bestBid = 999999;
+        	List<Package> tmp;
+        	if (myGoalPackages == null) 
+        		tmp = new ArrayList();
+        	else
+        		tmp = new ArrayList(myGoalPackages);
+        	int attempts = tmp.size();
+        	
+        	
+        }
+        
+    	return myLastBidValue;
     }
     
     public void win() {
-    	//adott robot megkapja a legutoljára szavazott csomagját
-    	//azt kivesszük a csomagok közül és színezzük
+    	Package p = myLastBidPackage;
+    	myLastBidPackage = null;
+    	myLastBidValue = 0;
+    	p.setColor(myColor);
+    	App.map.removePackage(p);
+    	myGoalPackages.add(lastIndex, p);
+    	lastIndex = -1;
+    	sumPath = myLastSumPath;
     }
     
     public void getReady() {
-    	//célcsomagokat berakni a dest tömbbe
+    	if (myGoalPackages != null) {
+    		// ezt lehet fordítva kell bejárni
+    		for (Package p : myGoalPackages) {
+    			addDestination(new Position(p.GetDestX(), p.GetDestY()));
+    	    	addDestination(new Position(p.GetX(), p.GetY()));
+    		}
+    	}
     }
     
 }
