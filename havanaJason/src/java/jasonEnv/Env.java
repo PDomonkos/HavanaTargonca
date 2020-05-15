@@ -22,7 +22,6 @@ public class Env extends Environment {
 
     Term                    bid      = Literal.parseLiteral("do(bid)");
     Term                    win      = Literal.parseLiteral("do(win)");
-    Term					query	 = Literal.parseLiteral("do(query)");
     Term                    start    = Literal.parseLiteral("do(startEnv)");
     
     @Override
@@ -50,11 +49,7 @@ public class Env extends Environment {
              } else if (action.equals(win)) {
                  myApp.map.win(agId);
             	 return true;
-             } else if (action.equals(query)) {
-                 int n = myApp.map.getPNum();
-                 updateAuctPercept(n == 0);
-            	 return true;
-             } else if (action.equals(start)) {
+             }  else if (action.equals(start)) {
                  myApp.enableStart();
             	 myApp.map.auctionStart();
             	 return true;

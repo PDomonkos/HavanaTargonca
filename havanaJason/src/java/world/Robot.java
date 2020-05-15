@@ -135,7 +135,6 @@ public class Robot extends Thing{
         		List<Package> tmp2 = new ArrayList(tmp);
         		tmp2.add(i,p);
         		
-        		//számolni
         		int newSumPath = 0;
         		List<Position> newPath = new ArrayList<Position>();
         		newPath.add(new Position(GetX(),GetY()));
@@ -171,7 +170,8 @@ public class Robot extends Thing{
     	Package p = myLastBidPackage;
     	myLastBidPackage = null;
     	myLastBidValue = 0;
-    	p.setColor(myColor);
+    	p.setColor(myColor);   	
+    	App.refresh();
     	App.map.removePackage(p);
     	myGoalPackages.add(lastIndex, p);
     	lastIndex = -1;

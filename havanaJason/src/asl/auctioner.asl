@@ -41,15 +41,15 @@
 	};
 	!checkEnd.
 
+@pb2[atomic]
 +!checkEnd 
-	: winner(U, V) & votes(K) & .all_names(L) & .length(L, K-1)
+	: winner(U, V) & votes(K) & .all_names(L) & .length(L, K+1)
 	<- 
 	.print("WINNER: ",U," with ",V); 
 	.broadcast(tell, winner(U)).
-
-+!checkEnd : votes(K) & .all_names(L) 
+	
+@pb3[atomic]
++!checkEnd 
+	: true
 	<- 
-	if (.length(L, K-1)) {
-		.print("ASD");
-	}
-	.print("DSA).
+	.print("WAITING").

@@ -17,4 +17,4 @@
 
 +bid(X) : true <- .print("SENDING BID",X); .send(auctioner, tell, placeBid(X)).
 
-+winner(U) : .my_name(U) <- do(win).
++winner(U) : .my_name(U) <- .print("anyad",U); do(win).
