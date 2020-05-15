@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Fri May 15 15:50:17 CEST 2020
 top=0
 left=0
@@ -6,3 +7,7 @@ width=1200
 agent_count=1
 speed=0
 height=800
+=======
+#Fri May 15 16:42:07 CEST 2020
+agent_count=1
+>>>>>>> agentCreation

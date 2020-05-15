@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="*.asl" kind="src" path="src/asl" />
-	<classpathentry kind="src" path="src/java" />
-	<classpathentry kind="lib" path="C:\VI\RETE IER\HF\jason\libs\jason-2.4.jar"/>
-<classpathentry kind="output" path="bin/classes"/></classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="*.asl" kind="src" path="src/asl"/>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="lib" path="C:/Users/Dani/Desktop/Egyetem/jason-2.4/libs/jason-2.4.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
