@@ -4,7 +4,6 @@
 
 /* Initial goals */
 
-
 /* Plans */
 
 +startAuction : true <- .print("started").
@@ -18,7 +17,7 @@
 +createAgents
 	 : true
 	 <-
-	 while(agentCount(X)  & X > 0) { 
-       -+agentCount(X+1);
-       .print(agentCount(X));
+	 while(agentCount(X)[source(percept)]  & X >= 0) { 
+       -+agentCount(X-1)[source(percept)];
+	   .create_agent(Forklift, "forklift.asl");
      }.
