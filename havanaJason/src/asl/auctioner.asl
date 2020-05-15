@@ -25,10 +25,31 @@
 +!startAuction 
 	: true 
 	<- 
-	.print("Starting auction"); 
+	.print("Starting auction");
+	-+winner(none,99999999999); 
+	+votes(0);
 	.broadcast(tell, youShouldBid).
 
-+placeBid(N) : .all_names(Q) & .length(Q, QL) & .findall(b(N,A), placeBid(N)[source(A)], L) & .length(L,QL-1) 
+@pb1[atomic]
++placeBid(V)[source(S)] 
+	: votes(K)
+	<-
+	-+votes(K+1);
+	if (winner(CurWin, CurV) & V < CurV) {
+		-winner(CurWin, CurV); 
+		+winner(S, V); 
+	};
+	!checkEnd.
+
++!checkEnd 
+	: winner(U, V) & votes(K) & .all_names(L) & .length(L, K-1)
 	<- 
-	.min(L,b(N,A));
-	.print("Winner is ",A," -> ",N).
+	.print("WINNER: ",U," with ",V); 
+	.broadcast(tell, winner(U)).
+
++!checkEnd : votes(K) & .all_names(L) 
+	<- 
+	if (.length(L, K-1)) {
+		.print("ASD");
+	}
+	.print("DSA).

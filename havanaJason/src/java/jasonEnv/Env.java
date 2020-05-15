@@ -85,7 +85,7 @@ public class Env extends Environment {
     }
     
     private void updateAgPercept(int agId, int value) {
-        String agName = "forklift" + (agId + 1);
+        String agName = "forklift_" + (agId);
         if (agId == 0) {
             agName = "forklift";
         }
