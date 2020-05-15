@@ -197,6 +197,8 @@ public class Warehouse implements Drawable {
     }
     
     public void removePackage(Package p) {
+        System.err.println("REMOVEPACKGE " + packagePool.size());
+        System.err.flush();
     	packagePool.remove(p);
     	if (packagePool.size()==0)
     		App.env.updateAuctPercept(true);

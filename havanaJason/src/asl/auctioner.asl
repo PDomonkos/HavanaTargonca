@@ -7,6 +7,8 @@
 /* Plans */
 +restart : true <- .print("restarted"); -restart[source(percept)]; !createAgents; !startAuction.
 
++end : true <- -szabad_a_tanc; .print("VEGE").
+
 +!createAgents
 	 : true
 	 <-
@@ -20,15 +22,17 @@
 	 while(agentCount(X)[source(percept)]  & X > 0) { 
        -+agentCount(X-1)[source(percept)];
 	   .create_agent(Forklift, "forklift.asl");
-     }.
+     }
+	 +szabad_a_tanc.
 
 +!startAuction 
 	: true 
 	<- 
 	.print("Starting auction");
 	-+winner(none,99999999999); 
-	+votes(0);
+	-+votes(0);
 	.broadcast(tell, youShouldBid).
+	
 
 @pb1[atomic]
 +placeBid(V)[source(S)] 
@@ -39,14 +43,16 @@
 		-winner(CurWin, CurV); 
 		+winner(S, V); 
 	};
-	!checkEnd.
+	!checkEnd;
+	-placeBid(V)[source(S)].
 
 @pb2[atomic]
 +!checkEnd 
 	: winner(U, V) & votes(K) & .all_names(L) & .length(L, K+1)
 	<- 
 	.print("WINNER: ",U," with ",V); 
-	.broadcast(tell, winner(U)).
+	.broadcast(tell, winner(U));
+	!startAuction.
 	
 @pb3[atomic]
 +!checkEnd 

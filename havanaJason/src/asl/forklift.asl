@@ -12,9 +12,12 @@
 
 +youShouldBid : true 
     <- .print("RECEIVED BID REQUEST");
-    do(bid).
+    do(bid);
+    -youShouldBid[source(auctioner)].
     
 
-+bid(X) : true <- .print("SENDING BID",X); .send(auctioner, tell, placeBid(X)).
++bid(X) : true <- .print("SENDING BID",X); .send(auctioner, tell, placeBid(X)); -bid(X)[source(percept)].
 
-+winner(U) : .my_name(U) <- .print("anyad",U); do(win).
++winner(U) : .my_name(U) <- .print("anyad",U); do(win); -winner(U)[source(auctioner)].
+
++winner(U) : true <-  -winner(U)[source(auctioner)].
