@@ -11,8 +11,8 @@
 	: true 
 	<- .print("restarted");
 	   //+startAuction;
-	   //-+restart.
-	   .
+	   -restart.
+	   
 
 +createAgents
 	 : true

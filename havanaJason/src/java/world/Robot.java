@@ -132,7 +132,7 @@ public class Robot extends Thing{
         	else
         		tmp = new ArrayList(myGoalPackages);
         	int attempts = tmp.size();
-        	
+        	for (int i = 0; i< attmepts)
         	
         }
         

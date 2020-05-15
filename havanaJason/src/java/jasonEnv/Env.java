@@ -22,8 +22,8 @@ public class Env extends Environment {
 
     Term                    bid      = Literal.parseLiteral("do(bid)");
     Term                    win      = Literal.parseLiteral("do(win)");
-    //Term					query	 = Literal.parseLiteral("do(query)");
-    //Term                    start    = Literal.parseLiteral("do(startEnv)");
+    Term					query	 = Literal.parseLiteral("do(query)");
+    Term                    start    = Literal.parseLiteral("do(startEnv)");
     
     @Override
     public void init(String[] args) {
@@ -41,7 +41,6 @@ public class Env extends Environment {
              if (sleep > 0) {
                  Thread.sleep(sleep);
              }
-
              int agId = getAgIdBasedOnName(agName);
 
              if (action.equals(bid)) {
@@ -75,7 +74,7 @@ public class Env extends Environment {
     }
     
     private int getAgIdBasedOnName(String agName) {
-        return (Integer.parseInt(agName.substring(5))) - 1;
+        return (Integer.parseInt(agName.substring(9))) - 1;
     }
     
     private void updateAgPercept(int agId, int value) {

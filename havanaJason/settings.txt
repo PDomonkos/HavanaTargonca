@@ -1,16 +1,7 @@
-<<<<<<< HEAD
-#Fri May 15 16:14:56 CEST 2020
-=======
-<<<<<<< HEAD
-#Fri May 15 15:50:17 CEST 2020
->>>>>>> 2d2601beaf2464aebe827a5ac643b6b72ea1582e
+#Fri May 15 17:53:29 CEST 2020
 top=0
 left=0
 maximized=0
 width=1200
 agent_count=1
 height=800
-=======
-#Fri May 15 16:42:07 CEST 2020
-agent_count=1
->>>>>>> agentCreation

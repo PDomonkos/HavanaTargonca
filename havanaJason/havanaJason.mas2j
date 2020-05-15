@@ -5,7 +5,6 @@ MAS havanaJason {
 	environment: jasonEnv.Env
 
 	agents:
-		forklift #4;
 		auctioner;
 
 	aslSourcePath:

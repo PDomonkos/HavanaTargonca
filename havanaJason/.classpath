@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry excluding="*.asl" kind="src" path="src/asl"/>
 	<classpathentry kind="src" path="src/java"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/Desktop/Egyetem/jason-2.4/libs/jason-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/VI/RETE IER/HF/jason/libs/jason-2.4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
