@@ -51,7 +51,7 @@ public class Env extends Environment {
              } else if (action.equals(win)) {
                  myApp.map.win(agId);
             	 return true;
-             } else if (action.equals(query)) {
+             } /*else if (action.equals(query)) {
                  int n = myApp.map.getPNum();
                  updateAuctPercept(n == 0);
             	 return true;
@@ -59,7 +59,7 @@ public class Env extends Environment {
                  myApp.enableStart();
             	 myApp.map.auctionStart();
             	 return true;
-             }  else {
+             }  */else {
                  logger.info("executing: " + action + ", but not implemented!");
              }
          } catch (InterruptedException e) {
@@ -75,7 +75,10 @@ public class Env extends Environment {
     }
     
     private int getAgIdBasedOnName(String agName) {
-        return (Integer.parseInt(agName.substring(5))) - 1;
+        int id = (Integer.parseInt(agName.split("_")[1]) - 1);
+        System.err.println("JAVA AGENT " + id);
+        System.err.flush();
+        return id;
     }
     
     private void updateAgPercept(int agId, int value) {
@@ -90,7 +93,6 @@ public class Env extends Environment {
     }
     
     public void startAuction(int agentCount) {
-		agentCount=10;
 		addPercept("auctioner", Literal.parseLiteral("restart"));
 		addPercept("auctioner", Literal.parseLiteral("agentCount("+String.valueOf(agentCount)+")"));
 		addPercept("auctioner", Literal.parseLiteral("createAgents"));
