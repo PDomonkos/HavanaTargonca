@@ -7,13 +7,6 @@
 /* Plans */
 
 +startAuction : true <- .print("started").
-<<<<<<< HEAD
- 
-	
-+restart :true <- 
-	.print("restarted");
-	-+startAuction.
-=======
 +restart 
 	: true 
 	<- .print("restarted");
@@ -28,4 +21,3 @@
        -+agentCount(X-1)[source(percept)];
 	   .create_agent(Forklift, "forklift.asl");
      }.
->>>>>>> agentCreation
