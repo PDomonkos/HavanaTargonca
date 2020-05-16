@@ -26,6 +26,7 @@ public class App {
     public static Warehouse map = null;
     public static AStar aStar = null;
     public static Env env = null;
+    public static int mode = 1;
     
     // Image cache for loading every image only once
     private static HashMap<String,BufferedImage> imageCache = new HashMap();
@@ -99,6 +100,26 @@ public class App {
     
     public void enableStart() {
     	mainFrame.enableStart();
+    }
+    
+    public static void setMode(int m) {
+    	mode = m;
+    }
+    
+    public static int getMode() {
+    	return mode;
+    }
+    
+    public static int getMax() {
+    	return map.GetMax();
+    }
+    
+    public static int getSum() {
+    	return map.GetSum();
+    }
+    
+    public static int getAve() {
+    	return map.GetAve();
     }
     
 }

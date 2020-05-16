@@ -38,7 +38,7 @@
 @pb1[atomic]
 +placeBid(V)[source(S)] 
 	: votes(K) & szabad_a_tanc
-	<- .print("+++++++++++++++++++++++++++++++++++++++++ ",S, " szavazott. ",V);
+	<-
 	-+votes(K+1);
 	if (winner(CurWin, CurV) & V < CurV) {
 		-winner(CurWin, CurV); 

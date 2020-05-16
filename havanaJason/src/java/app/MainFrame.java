@@ -1,8 +1,12 @@
 package app;
 
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Main frame of the simulator
@@ -58,14 +62,7 @@ public class MainFrame extends javax.swing.JFrame{
     public void refresh() {
         // Repaint cells and world objects
         paintPanel.repaint();
-        
-        // Calculate and display score
-        int score = 0; //RescueFramework.map.getScore();
-        int maxScore = 100; //RescueFramework.map.getMaxScore();
-        String label = "Time: "+App.map.GetTime()+" | Saved: "+score+" / "+maxScore;
-        if (maxScore > 0) {
-            label = label +" ("+(score*100/maxScore)+"%)";
-        }
+        String label = "Max: "+App.getMax()+" | Sum: "+App.getSum()+" | Ave: "+App.getAve();
         jLabel2.setText(label);
     }
 
@@ -86,6 +83,8 @@ public class MainFrame extends javax.swing.JFrame{
         jSpinner1 = new javax.swing.JSpinner();
         jSpinner2 = new javax.swing.JSpinner();
         jSpinner3 = new javax.swing.JSpinner();
+        jSpinnerMode = new javax.swing.JSpinner();
+        jLabelMode = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -147,6 +146,26 @@ public class MainFrame extends javax.swing.JFrame{
         jSpinner3.setValue(13);
 
         jLabel6.setText("Height:");
+        
+        jSpinnerMode.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
+        jSpinnerMode.setFocusable(false);
+        jSpinnerMode.setValue(1);
+        jSpinnerMode.addChangeListener(new ChangeListener() {
+	        public void stateChanged(ChangeEvent e) {
+	          switch ((Integer)jSpinnerMode.getValue()) {
+		          case 1 :
+		        	  jLabelMode.setText("MiniMax");
+		        	  break;
+		          case 2 :
+		        	  jLabelMode.setText("MiniSum");
+		        	  break;
+		          default:
+		        	  jLabelMode.setText("MiniAve");
+	          }
+	        }
+	      });
+        
+        jLabelMode.setText("MiniMax");
 
         jLabel4.setText("Autostep speed:");
 
@@ -168,6 +187,10 @@ public class MainFrame extends javax.swing.JFrame{
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelMode)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSpinnerMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -199,6 +222,8 @@ public class MainFrame extends javax.swing.JFrame{
                         .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)
                         .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelMode)
+                        .addComponent(jSpinnerMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
                         .addComponent(jButton3)
                         .addComponent(jLabel4)))
@@ -230,6 +255,7 @@ public class MainFrame extends javax.swing.JFrame{
         int count = App.map.Set(h, w, 5, 2, agentCount);
         App.finished = false;
         
+        App.setMode((Integer)jSpinnerMode.getValue());
         App.env.startAuction(count);
         Settings.setInt("agent_count", count);
         jSpinner1.setValue(count);
@@ -314,11 +340,13 @@ public class MainFrame extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;		//With
     private javax.swing.JLabel jLabel6;		//Height
+    private javax.swing.JLabel jLabelMode;		//Height
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSlider jSlider1;	//speed
     private javax.swing.JSpinner jSpinner1;	//�gens sz�m
     private javax.swing.JSpinner jSpinner2;	//sz�less�g
     private javax.swing.JSpinner jSpinner3;	//magass�g
+    private javax.swing.JSpinner jSpinnerMode;	//magass�g
     // End of variables declaration//GEN-END:variables
 
  

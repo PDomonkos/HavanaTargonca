@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 import app.App;
 
@@ -23,8 +24,13 @@ public class Robot extends Thing{
     private Package myLastBidPackage = null;
     private int myLastBidValue = 0;
     private int lastIndex = -1;
+    
     private int sumPath = 0;
-    private int myLastSumPath = 0;
+    private int minAve = 0;
+    
+    private int myLastMax = 0;
+    private int myLastSum = 0;
+    private int myLastAve = 0;
     
     public Robot(Tile t, float c){
     	super(t);
@@ -33,7 +39,8 @@ public class Robot extends Thing{
         t.Inc();
         dest = new Stack<Position>();
         myGoalPackages = new ArrayList<Package>();
-        myColor = new Color(150,255-Math.round(255*c),Math.round(255*c));
+        Random r = new Random();
+        myColor = new Color(Math.round(20*c),255-Math.round(255*c),r.nextInt(255));
     }
 
     public void move(Direction d){
@@ -119,9 +126,10 @@ public class Robot extends Thing{
 /////////////////////////////////////////////////////////////////////////////////
     public int bid() {
     	if (myLastBidPackage != null && App.map.isPInPackages(myLastBidPackage)) 
-    		return myLastSumPath;
+    		return myLastBidValue;
 	
-        int bestSumPath = 999999;
+        int bestAve = 999999;
+        int bestSum = 999999;
     	int bestIndex = -1;
     	Package bestPackage = null;
     	
@@ -137,22 +145,38 @@ public class Robot extends Thing{
         		List<Package> tmp2 = new ArrayList(tmp);
         		tmp2.add(i,p);
         		
-        		int newSumPath = 0;
-        		List<Position> newPath = new ArrayList<Position>();
+        		int newBestAve = 0;
+        		int newBestSum = 0;
+        		/*List<Position> newPath = new ArrayList<Position>();
         		for (Package pp : tmp2) {
         			newPath.add(new Position(pp.GetX(),pp.GetY()));
         			newPath.add(new Position(pp.GetDestX(),pp.GetDestY()));
+        		}*/
+        					    	        	
+	        	Position start = new Position(GetX(),GetY());
+	        	int pathTill = 0;
+        		for (Package pac : tmp2) {
+        			Position sp = new Position(pac.GetX(),pac.GetY());
+        			Position dp = new Position(pac.GetDestX(),pac.GetDestY());
+        			int temp = App.aStar.getDist(start, sp) + App.aStar.getDist(sp, dp);
+        			newBestAve += temp + pathTill;
+        			pathTill += temp;
+        			newBestSum += temp;
+        			start = dp;
         		}
         		
-        		Position start = new Position(GetX(),GetY());
+        		
+        		/*start = new Position(GetX(),GetY());
         		for (Position pos : newPath) {
-        			newSumPath += App.aStar.getDist(start, pos);
+        			best += App.aStar.getDist(start, pos);
         			start = pos;
-        		}
+        		}*/
         		
-        		if (newSumPath < bestSumPath) {
+        		
+        		if ((App.getMode() == 3 && newBestAve < bestAve ) || (newBestSum < bestSum) ) {
         			bestIndex = i;
-        			bestSumPath = newSumPath;
+        			bestAve = newBestAve;
+        			bestSum = newBestSum;
         			bestPackage = p;	
         		}
         	}
@@ -160,23 +184,39 @@ public class Robot extends Thing{
         }
         
         myLastBidPackage = bestPackage;
-        myLastBidValue = bestSumPath-sumPath;
         lastIndex = bestIndex;
-        myLastSumPath = bestSumPath;
         
-    	return myLastSumPath;
+        myLastMax = bestSum;
+        myLastSum = bestSum;
+        myLastAve = bestAve;
+
+        switch (App.getMode()) {
+	        case 1 :
+	        	myLastBidValue = myLastMax;
+	      	  break;
+	        case 2 :
+	        	myLastBidValue = myLastSum - sumPath;
+	      	  break;
+	        default:
+	        	myLastBidValue = myLastAve - minAve;
+        }
+        
+    	return myLastBidValue;
     }
     
     public void win() {
     	Package p = myLastBidPackage;
-    	myLastBidValue = 0;
     	p.setColor(myColor);   	
     	App.refresh();
     	App.map.removePackage(p);
     	myGoalPackages.add(lastIndex, p);
-    	lastIndex = -1;
-    	sumPath = myLastSumPath;
+    	
+    	sumPath = myLastSum;
+    	minAve = myLastAve;
+    	
     	myLastBidPackage = null;
+    	myLastBidValue = 0;
+    	lastIndex = -1;
     }
     
     public void getReady() {
@@ -188,6 +228,14 @@ public class Robot extends Thing{
     	    	addDestination(new Position(p.GetX(), p.GetY()));
     		}
     	}
+    }
+    
+    public int getSumPath() {
+    	return sumPath;
+    }
+    
+    public int getMinAve() {
+    	return minAve;
     }
     
 }

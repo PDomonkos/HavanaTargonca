@@ -137,12 +137,12 @@ public class Warehouse implements Drawable {
 	            
 	            int fromXBlock, fromYBlock, fromXinBlock, fromYinBlock, toXBlock, toYBlock, toXinBlock, toYinBlock;
 	
-	            fromXBlock = Integer.parseInt(data[0]);
-	            fromYBlock = Integer.parseInt(data[1]);
+	            fromYBlock = Integer.parseInt(data[0]);
+	            fromXBlock = Integer.parseInt(data[1]);
 	            fromXinBlock = Integer.parseInt(data[2]);
 	            fromYinBlock = Integer.parseInt(data[3]);
-	            toXBlock = Integer.parseInt(data[4]);
-	            toYBlock = Integer.parseInt(data[5]);
+	            toYBlock = Integer.parseInt(data[4]);
+	            toXBlock = Integer.parseInt(data[5]);
 	            toXinBlock = Integer.parseInt(data[6]);
 	            toYinBlock = Integer.parseInt(data[7]);
 	            
@@ -157,8 +157,9 @@ public class Warehouse implements Drawable {
 	            	toX += 2;
 	
 	            // cï¿½llal rendelkezï¿½ csomagok
-	            if (fromX > 0 && fromY > 0 && toX > 0 && toY > 0 && fromX < w + 1 && fromY < h + 1 && toX < w + 1 && toY < h + 1)
+	            if (fromX > 0 && fromY > 0 && toX > 0 && toY > 0 && fromX < w + 1 && fromY < h + 1 && toX < w + 1 && toY < h + 1) {
 	            	packagePool.add(new Package(tiles[fromX][fromY],new Position(toX,toY)));
+	            }
           
 	        }
 	        csvReader.close();
@@ -220,6 +221,32 @@ public class Warehouse implements Drawable {
     
     public Tile[][] getTiles(){
     	return tiles;
+    }
+    
+    public int GetMax() {
+    	int max = 0;
+    	for (Robot r : robots) 
+    		if (max < r.getSumPath())
+    			max = r.getSumPath();
+    	return max;
+    	// time-al egyenlõ??
+    }
+    
+    public int GetSum() {
+    	int sum = 0;
+    	for (Robot r : robots) 
+    		sum += r.getSumPath();
+    	return sum;
+    }
+    
+    public int GetAve() {
+    	int ave = 0;
+    	int cnt = 0;
+    	for (Robot r : robots) {
+    		ave += r.getMinAve();
+    		cnt += 1;
+    	}
+    	return (int)ave/cnt;
     }
     
 }
