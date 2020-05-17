@@ -147,10 +147,7 @@ public class Warehouse implements Drawable {
         				if (r.nextInt(100) > 80)
         					possiblePos.add(new Position(YBlock * (yLen+1) + YinBlock+2,XBlock * (xLen+1) + XinBlock+2));
         Collections.shuffle(possiblePos, new Random(70)); 
-        
-        System.err.println("asd "+possiblePos.size());
-    	System.err.flush();
-        
+
         boolean picked = false;
         for (int i = 0; i < possiblePos.size()-1; i+=1) {
         	if (!picked) {
@@ -158,9 +155,6 @@ public class Warehouse implements Drawable {
         		int fromY = possiblePos.get(i).GetY();
         		int toX = possiblePos.get(i+1).GetX();
         		int toY = possiblePos.get(i+1).GetY();
-
-        		System.err.println(" fx "+fromX+" fy "+fromY+" tx "+toX+" ty "+toY);
-            	System.err.flush();
         		
         		if (fromX > (w - 1)/2)
 	            	fromX += 2;

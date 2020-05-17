@@ -92,7 +92,7 @@ public class MainFrame extends javax.swing.JFrame{
         paintPanel = new app.PaintPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Rakt�rPakol�s");
+        setTitle("Warehouse optimization");
         setMinimumSize(new java.awt.Dimension(1200, 800));
         setSize(new java.awt.Dimension(1200, 800));
 

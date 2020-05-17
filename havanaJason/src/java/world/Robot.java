@@ -207,12 +207,13 @@ public class Robot extends Thing{
     public void win() {
     	Package p = myLastBidPackage;
     	p.setColor(myColor);   	
-    	App.refresh();
     	App.map.removePackage(p);
     	myGoalPackages.add(lastIndex, p);
     	
     	sumPath = myLastSum;
     	minAve = myLastAve;
+    	
+    	App.refresh();
     	
     	myLastBidPackage = null;
     	myLastBidValue = 0;
