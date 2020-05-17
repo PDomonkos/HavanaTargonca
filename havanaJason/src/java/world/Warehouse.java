@@ -1,10 +1,10 @@
 package world;
 
-
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -18,6 +18,7 @@ public class Warehouse implements Drawable {
     List<Robot> robots;
     //mï¿½g el nem vitt csomagok
     List<Package> packagePool;
+    int packageNum = 0;
     //magassï¿½g 
     int h;
     //szï¿½lessï¿½g
@@ -102,6 +103,8 @@ public class Warehouse implements Drawable {
             	new Obstacle(tiles[(int)w/2+1][i]);
         }
 
+        r.setSeed(40);
+        
         //csomagok 90% os kitï¿½ltï¿½ttsï¿½ggel
         for (int i = 0; i < (w - 1) / (yLen + 1); i++)
             for (int j = 0; j < (h - 1) / (xLen + 1); j++)
@@ -115,8 +118,14 @@ public class Warehouse implements Drawable {
                     }
         
         //n db targonca lï¿½trehozï¿½sa
-        for (int i = 0; i < Math.min((w - 1)/2,n); i++) 
-        	robots.add(new Robot(tiles[i + 1][h], (float)(i+1)/n));
+        boolean flip = false;
+        for (int i = 0; i < Math.min((w - 1)/2,n); i++) {
+        	int xpos = i + 1;
+        	if (flip)
+        		xpos = w-xpos+1;
+        	robots.add(new Robot(tiles[xpos][h], (float)(i+1)/n));
+        	flip = !flip;
+        }
         
         return Math.min((w - 1)/2,n);
     }
@@ -128,8 +137,49 @@ public class Warehouse implements Drawable {
         int count = 0;
         String row;
         
+        Random r = new Random();
+        r.setSeed(50);
+        List<Position> possiblePos = new ArrayList<Position>();
+        for (int XBlock = 0; XBlock < 8; XBlock+=1) 
+        	for (int YBlock = 0; YBlock < 8; YBlock+=1) 
+        		for (int XinBlock = 0; XinBlock < 5; XinBlock+=1) 
+        			for (int YinBlock = 0; YinBlock < 2; YinBlock+=1) 
+        				if (r.nextInt(100) > 80)
+        					possiblePos.add(new Position(YBlock * (yLen+1) + YinBlock+2,XBlock * (xLen+1) + XinBlock+2));
+        Collections.shuffle(possiblePos, new Random(70)); 
+        
+        System.err.println("asd "+possiblePos.size());
+    	System.err.flush();
+        
+        boolean picked = false;
+        for (int i = 0; i < possiblePos.size()-1; i+=1) {
+        	if (!picked) {
+        		int fromX = possiblePos.get(i).GetX();
+        		int fromY = possiblePos.get(i).GetY();
+        		int toX = possiblePos.get(i+1).GetX();
+        		int toY = possiblePos.get(i+1).GetY();
+
+        		System.err.println(" fx "+fromX+" fy "+fromY+" tx "+toX+" ty "+toY);
+            	System.err.flush();
+        		
+        		if (fromX > (w - 1)/2)
+	            	fromX += 2;
+	            if (toX > (w - 1)/2)
+	            	toX += 2;
+        		
+        		if (fromX > 0 && fromY > 0 && toX > 0 && toY > 0 && fromX < w + 1 && fromY < h + 1 && toX < w + 1 && toY < h + 1) {
+	            	packagePool.add(new Package(tiles[fromX][fromY],new Position(toX,toY)));
+	            	picked = true;
+	            }
+	
+        	} else {picked = false;}
+        }
+        packageNum = packagePool.size();
+        
+        //beolvasásnál
+        
         //csv fï¿½jl soronkï¿½nti olvasï¿½sa
-        try {
+        /*try {
 	        BufferedReader csvReader = new BufferedReader(new FileReader(goals));
 	        row = csvReader.readLine();
 	        while ((row = csvReader.readLine()) != null) {
@@ -163,9 +213,8 @@ public class Warehouse implements Drawable {
           
 	        }
 	        csvReader.close();
-        }catch(Exception e) {
-        	
-        }
+	        packageNum = packagePool.size();
+        	}catch(Exception e) {}*/
     }   
 
     //minden targoncï¿½t lï¿½ptet, ha mï¿½r nem lï¿½pnek falseal tï¿½r vissza
@@ -240,13 +289,15 @@ public class Warehouse implements Drawable {
     }
     
     public int GetAve() {
+    	if (packageNum == 0)
+    		return 0;
     	int ave = 0;
     	int cnt = 0;
     	for (Robot r : robots) {
     		ave += r.getMinAve();
     		cnt += 1;
     	}
-    	return (int)ave/cnt;
+    	return (int)ave/packageNum;
     }
     
 }

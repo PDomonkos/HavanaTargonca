@@ -5,12 +5,13 @@
 /* Initial goals */
 
 /* Plans */
-+restart : true <- .print("restarted"); -restart[source(percept)]; !createAgents. 
-
-+end : true <- .abolish(szabad_a_tanc); .print("VEGE"); do(startEnv).
++restart : true <- .print("restarted"); -restart[source(percept)]; !deleteAgents. 
 
 @pb0[atomic]
-+!createAgents
++end : true <- .abolish(szabad_a_tanc); .print("VEGE"); do(startEnv).
+
+@pb1[atomic]
++!deleteAgents
 	 : true
 	 <-
 	 .all_names(L);
@@ -20,13 +21,18 @@
 			.kill_agent(A);
 		 }
 	 };
-	 while(agentCount(X)[source(percept)]  & X > 0) { 
+	 !createAgents.
+	  
+@pb2[atomic]
++!createAgents
+	: true
+	<- while(agentCount(X)[source(percept)]  & X > 0) { 
        -+agentCount(X-1)[source(percept)];
 	   .create_agent(Forklift, "forklift.asl");
      }
 	 +szabad_a_tanc;
 	 !startAuction.
-
+@pb3[atomic]
 +!startAuction 
 	: szabad_a_tanc 
 	<- 
@@ -35,7 +41,7 @@
 	-+votes(0);
 	.broadcast(tell, youShouldBid).	
 	
-@pb1[atomic]
+@pb4[atomic]
 +placeBid(V)[source(S)] 
 	: votes(K) & szabad_a_tanc
 	<-
@@ -47,16 +53,16 @@
 	!checkEnd;
 	-placeBid(V)[source(S)].
 
-@pb2[atomic]
+@pb5[atomic]
 +!checkEnd 
 	: winner(U, V) & votes(K) & .all_names(L) & .length(L, K+1)
 	<- 
 	.print("WINNER: ",U," with ",V); 
 	.broadcast(tell, winner(U));
-	.wait(100);
+	.wait(400);
 	!startAuction.
 	
-@pb3[atomic]
+@pb6[atomic]
 +!checkEnd 
 	: true
 	<- 

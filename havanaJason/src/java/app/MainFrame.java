@@ -255,6 +255,13 @@ public class MainFrame extends javax.swing.JFrame{
         int count = App.map.Set(h, w, 5, 2, agentCount);
         App.finished = false;
         
+        try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         App.setMode((Integer)jSpinnerMode.getValue());
         App.env.startAuction(count);
         Settings.setInt("agent_count", count);
@@ -265,7 +272,7 @@ public class MainFrame extends javax.swing.JFrame{
         
         jButton4.setEnabled(false);
         jButton3.setEnabled(false);
-        
+        //jButton1.setEnabled(false);
         
         if (stepThread != null) stepThread.disable();
         refresh();
@@ -361,5 +368,6 @@ public class MainFrame extends javax.swing.JFrame{
     public void enableStart() {
     	jButton4.setEnabled(true);
         jButton3.setEnabled(true);
+        jButton1.setEnabled(true);
     }
 }
